@@ -1,0 +1,33 @@
+[project]
+name="fastapi_tdom_poc"
+dynamic = ["version"]
+dependencies = [
+    "fastapi[standard]",
+    "tdom",
+    "starlette_tdom",
+]
+requires-python = ">= 3.14"
+description = "FastAPI + TDOM POC"
+authors = [
+  {name = "Ian Wilson", email = "ian@gardentheory.com"}
+]
+readme="README.rst"
+license="MIT"
+
+[project.optional-dependencies]
+dev = [
+    "twine", # Check RST
+]
+
+
+[build-system]
+requires = ["hatchling", "versioningit"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "versioningit"
+default-version = "0.0.0+unknown"
+
+[tool.hatch.build.hooks.versioningit-onbuild]
+source-file="src/fastapi_tdom_poc/__about__.py"
+build-file="fastapi_tdom_poc/__about__.py"
