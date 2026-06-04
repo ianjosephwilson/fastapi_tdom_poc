@@ -15,7 +15,6 @@ from typing import (
 )
 
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
 from starlette_tdom import TdomTemplates as _TdomTemplates, TdomCtx
 from tdom.processor import (
     TemplateProcessor,
@@ -29,7 +28,7 @@ from tdom.tnodes import TAttribute
 
 
 def TdomTemplates():
-    return _TdomTemplates(to_html=to_html) # Load in configured processor
+    return _TdomTemplates(to_html=to_html)  # Load in configured processor
 
 
 @dataclass(frozen=True, slots=True)

@@ -1,7 +1,3 @@
-from collections.abc import Callable
-from dataclasses import dataclass, field
-from functools import lru_cache
-from inspect import isclass
 from string.templatelib import Template
 
 from fastapi import FastAPI, Request
@@ -28,7 +24,7 @@ def make_home_page(head_t: Template) -> Template:
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
-    page_t = make_home_page(head_t=t'<{HeadAssets} />')
+    page_t = make_home_page(head_t=t"<{HeadAssets} />")
     return tdom_templates.TemplateResponse(request, page_t)
 
 
