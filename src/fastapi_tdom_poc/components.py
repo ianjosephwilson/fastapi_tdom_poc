@@ -1,19 +1,40 @@
+from dataclasses import dataclass
 from string.templatelib import Template
 from typing import Annotated
-
-from fastapi import FastAPI, Request
 
 from .tdomhelpers import TDepends, IUrlFor
 
 
-def Footer(
-    app: Annotated[FastAPI, TDepends()],
-    url_for: Annotated[IUrlFor, TDepends()],
-    request: Annotated[Request, TDepends()],
-) -> Template:
-    assert app and url_for and request, "Testing DI."
-    about_url = url_for("about")
-    return t'<div class="footer"><a href={about_url}>About</a></div>'
+@dataclass
+class Footer:
+    """
+    Component class to manage footer.
+
+    We break this out into a class so we can use helper methods.
+    """
+
+    url_for: Annotated[IUrlFor, TDepends()]
+
+    def _get_links(self) -> list[tuple[str, str]]:
+        return [
+            (self.url_for("home"), "Home"),
+            (self.url_for("about"), "About"),
+        ]
+
+    def _get_els(self) -> list[Template]:
+        # Insert a separate between links.
+        footer_els = []
+        SEP = t" | "
+        links = self._get_links()
+        for index, (href, content) in enumerate(links):
+            if index != 0:
+                footer_els.append(SEP)
+            footer_els.append(t"<a href={href}>{content}</a>")
+        return footer_els
+
+    def __call__(self) -> Template:
+        footer_els = self._get_els()
+        return t'<div class="footer">{footer_els}</div>'
 
 
 def Layout(
@@ -24,6 +45,7 @@ def Layout(
 <html lang="en-US">
     <head>
         <meta charset="utf-8">
+        <{HeadAssets} />
         {head_t}
     </head>
     {children}

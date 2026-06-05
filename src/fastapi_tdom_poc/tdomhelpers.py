@@ -27,7 +27,7 @@ from tdom.scope import ScopedTemplate
 from tdom.tnodes import TAttribute
 
 
-def TdomTemplates():
+def TdomTemplates() -> _TdomTemplates:
     return _TdomTemplates(to_html=to_html)  # Load in configured processor
 
 
