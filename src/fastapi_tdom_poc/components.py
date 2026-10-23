@@ -22,7 +22,7 @@ class Footer:
         ]
 
     def _get_els(self) -> list[Template]:
-        # Insert a separate between links.
+        # Insert a separator between links.
         footer_els = []
         SEP = t" | "
         links = self._get_links()
